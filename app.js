@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const layout = require("./views/layout");
-const { db } = require("./models");
+const { db, Page, User } = require("./models");
 
 const app = express();
 
@@ -19,6 +19,11 @@ db.authenticate().then(() => {
 
 const PORT = 3000;
 
-app.listen(PORT, () => {
-  console.log(`App listening in port ${PORT}`);
-});
+const init = async () => {
+  await db.sync();
+  app.listen(PORT, () => {
+    console.log(`App listening in port ${PORT}`);
+  });
+}
+
+init();
